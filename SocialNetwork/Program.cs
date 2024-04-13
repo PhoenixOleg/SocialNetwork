@@ -1,8 +1,10 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using SocialNetwork.Controllers.Context;
 using SocialNetwork.Models;
+using SocialNetwork.Models.Context;
+using System.Reflection;
 
 namespace SocialNetwork
 {
@@ -30,6 +32,13 @@ namespace SocialNetwork
                 opts.Password.RequireDigit = false;
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+            // Подключаем автомаппинг @@@
+            var assembly = Assembly.GetAssembly(typeof(MappingProfile));
+            builder.Services.AddAutoMapper(assembly);
+            
+
 
             // Add services to the container. ???
             builder.Services.AddControllersWithViews();
