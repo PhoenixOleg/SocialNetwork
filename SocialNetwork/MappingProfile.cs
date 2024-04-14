@@ -13,6 +13,7 @@ namespace SocialNetwork
                 .ForMember(m => m.UserName, opt => opt.MapFrom (src => src.Login))
                 .ForMember(m => m.BirthDate, opt => opt.MapFrom(src => new DateTime(src.Year, src.Month, src.Date)))
                 ;
+            CreateMap<LoginViewModel, User>();
         }
     }
 }

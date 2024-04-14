@@ -1,16 +1,33 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity;
+@using SocialNetwork.ViewModels.Account
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@model StoreOfModels
+
+@{
     ViewData["Title"] = "Главная";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <a asp-area="" asp-controller="AccountManager" asp-action="Logout">Выход</a>
+}
+
 
 <div class="row">
     <div class="side">
-        Описание самой клевой соцсети
+        <div class="center">
+            Пользуйтесь нашей самой крутой соцсетью! Регистрируйтесь всего за 2 минуты, делитесь мыслями, находите новых друзей.
+        </div>
+        <img class="main-img" src="http://pngimg.com/uploads/husky/husky_PNG19.png" />
     </div>
 
 
     <div class="main">
-        <partial name="Register" />
-        блок авторизации
+        <partial name="Login" model="Model.LoginView" />
+        <partial name="Register" model="Model.RegisterView" />
     </div>
 
 </div>

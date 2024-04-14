@@ -21,6 +21,13 @@ namespace SocialNetwork.Controllers
         }
 
         [Route("Register")]
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View("Home/Register");
+        }
+
+        [Route("Register")]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
