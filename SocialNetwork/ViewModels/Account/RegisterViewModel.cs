@@ -6,11 +6,11 @@ namespace SocialNetwork.ViewModels.Account
     {
 
         [Required]
-        [Display(Name = "Имя")]
+        [Display(Name = "Имя", Prompt = "Введите имя")]
         public string FirstName { get; set; }
 
         [Required]
-        [Display(Name = "Фамилия")]
+        [Display(Name = "Фамилия", Prompt = "Введите фамилию")]
         public string LastName { get; set; }
 
         [Required]
@@ -19,15 +19,15 @@ namespace SocialNetwork.ViewModels.Account
 
         [Required]
         [Display(Name = "Год")]
-        public int Year { get; set; }
+        public int? Year { get; set; }
 
         [Required]
         [Display(Name = "День")]
-        public int Date { get; set; }
+        public int? Date { get; set; }
 
         [Required]
         [Display(Name = "Месяц")]
-        public int Month { get; set; }
+        public int? Month { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

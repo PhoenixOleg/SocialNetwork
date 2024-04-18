@@ -11,7 +11,7 @@ namespace SocialNetwork
             CreateMap<RegisterViewModel, User>()
                 .ForMember (m => m.Email, opt => opt.MapFrom(src => src.EmailReg))
                 .ForMember(m => m.UserName, opt => opt.MapFrom (src => src.Login))
-                .ForMember(m => m.BirthDate, opt => opt.MapFrom(src => new DateTime(src.Year, src.Month, src.Date)))
+                .ForMember(m => m.BirthDate, opt => opt.MapFrom(src => new DateTime((int)src.Year, (int)src.Month, (int)src.Date)))
                 ;
             CreateMap<LoginViewModel, User>();
         }
