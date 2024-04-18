@@ -34,11 +34,20 @@ namespace SocialNetwork
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
-            // Подключаем автомаппинг @@@
-            var assembly = Assembly.GetAssembly(typeof(MappingProfile));
-            builder.Services.AddAutoMapper(assembly);
-            
+            #region Подключаем автомаппинг (заменен на более понятный из модуля 33)
+            //Закоменченный код из модуля 34
+            //var assembly = Assembly.GetAssembly(typeof(MappingProfile));
+            //builder.Services.AddAutoMapper(assembly);
 
+            var mapperConfig = new MapperConfiguration((v) =>
+            {
+                v.AddProfile(new MappingProfile()); //Добавляем в профиль конфигурации класс с описанием маппинга объектов
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+
+            builder.Services.AddSingleton(mapper);
+            #endregion Подключаем автомаппинг
 
             // Add services to the container. ???
             builder.Services.AddControllersWithViews();
@@ -66,7 +75,7 @@ namespace SocialNetwork
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Index}/{id?}"); //Обычный маршрут по умолчанию -> контроллер Home, действие Index
 
             app.Run();
         }

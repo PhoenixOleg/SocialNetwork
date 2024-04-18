@@ -14,10 +14,11 @@ namespace SocialNetwork.Controllers
             _logger = logger;
         }
 
-        [Route("")]
-        public IActionResult Index()
+        [Route("")] //Маршрут по умолчанию
+        public IActionResult Index() // Отображает представление (страницу) /Views/Home/Index.cshtml
         {
-            return View(new StoreOfModels());
+            return View(new StoreOfModels()); //Собирает представление из моделей представлений,
+                                              //инициализируемых конструкторе класса StoreOfModels (регистрация и вход)
         }
 
         [Route("[action]")]

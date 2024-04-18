@@ -1,41 +1,58 @@
 ﻿<!DOCTYPE html>
+<!-- Это мастер страница - общая часть всех страниц приложения. См. Razor Pages -->
+<!-- Сведения о ней находятся в файле _ViewStart.cshtml -->
 <html lang="en">
 <head>
+    <!-- Обязательные метатеги Bootstrap Begin -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - SocialNetwork</title>
+    <!-- Обязательные метатеги Bootstrap End -->
 
+    <!-- Тут тащим по ключу значение для заголовка -->
+    <title>@ViewData["Title"] - SocialNetwork</title> 
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/main-page.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/SocialNetwork.styles.css" asp-append-version="true" />
+
+    <!-- Наши стили -->
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/main-page.css" />
     <link rel="stylesheet" href="~/css/base-styles.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <body class="background-main">
+    <!-- Header страницы -->
     <header class="border-bottom header background-white">
         <div class="container">
             <div class="topnav">
-                <a asp-area="" asp-controller="Home" asp-action="Index">SocialNetwork</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" title="Возврат на главную страницу">My learning Social Network</a> 
+                <!-- Поле поиска -->
                 <partial name="_SearchLayoutPartial" />
+                <!-- Видимо здесь добавить отделный partial с кнопкой выхода -->
             </div>
         </div>
     </header>
+    <!-- Main страницы -->
     <div class="container background-main">
         <main role="main" class="pb-3">
+            <!-- Placeholder для "индивидуальных" страниц (представлений) приложения. Например, сюда пойдет представление index.cshtml -->
             @RenderBody()
         </main>
     </div>
 
+    <!-- Footer страницы -->
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - AwesomeNetwork - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2024 - SocialNetwork - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
+    <!-- Плагины JS для Bootstrap -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <!-- Дочерняя страница не обязана иметь секцию скриптов -->
     @RenderSection("Scripts", required: false)
 </body>
 </html>

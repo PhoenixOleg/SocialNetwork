@@ -6,15 +6,9 @@
 @model StoreOfModels
 
 @{
+    //Определяем ключ-значение для заголовка (используется в _Layout.cshtml)
     ViewData["Title"] = "Главная";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-@if (SignInManager.IsSignedIn(User))
-{
-    <a asp-area="" asp-controller="AccountManager" asp-action="Logout">Выход</a>
-}
-
 
 <div class="row">
     <div class="side">
@@ -24,7 +18,7 @@
         <img class="main-img" src="http://pngimg.com/uploads/husky/husky_PNG19.png" />
     </div>
 
-
+    @* Подключение частичных представлений *@
     <div class="main">
         <partial name="Login" model="Model.LoginView" />
         <partial name="Register" model="Model.RegisterView" />
