@@ -24,13 +24,13 @@
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
         </div>
-
+        
         <div class="text-color-gray text-size_12">Дата рождения</div>
         <div class="mrgn center">
-            <select asp-for="Date" class="form-control date_control" ID="ddlDay">
-                <option value="">@Model.Date</option>
+            <select asp-for="Day" class="form-control date_control" ID="ddlDay">
+                <option value="">@Model.Day</option>
             </select>
-            <span asp-validation-for="Date" class="text-danger"></span>
+            <span asp-validation-for="Day" class="text-danger"></span>
 
             <select asp-for="Month" class="form-control date_control" asp-items="Html.GetEnumSelectList<SocialNetwork.ViewModels.Months>()" onchange="PopulateDays()" ID="ddlMonth">
                 <option value="">@Model.Month</option>

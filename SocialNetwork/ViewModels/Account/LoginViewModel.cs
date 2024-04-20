@@ -9,14 +9,14 @@ namespace SocialNetwork.ViewModels.Account
         [Display(Name = "Email", Prompt = "Введите email")]
         public string Email { get; set; }
 
-        public string? ReturnUrl { get; internal set; }
+        public string? ReturnUrl { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль", Prompt = "Введите пароль")]
-        public string Password { get; internal set; }
+        public string Password { get; set; }
 
         [Display(Name = "Запомнить?")]
-        public bool RememberMe { get; internal set; }
+        public bool RememberMe { get; set; }
     }
 }

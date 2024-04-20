@@ -42,24 +42,31 @@ namespace SocialNetwork.Controllers
 
                 var user = _mapper.Map<User>(model);
 
-                var result = await _signInManager.PasswordSignInAsync(user.Email, model.Password, model.RememberMe, false);
-                if (result.Succeeded)
+                var userFind = await _userManager.FindByEmailAsync(user.Email);
+
+                if (userFind != null)
                 {
-                    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+                    var result = await _signInManager.PasswordSignInAsync(userFind.UserName, model.Password, model.RememberMe, false);
+                    if (result.Succeeded)
                     {
-                        return Redirect(model.ReturnUrl);
+                        if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+                        {
+                            return Redirect(model.ReturnUrl);
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        ModelState.AddModelError("", "Неправильный логин и (или) пароль");
                     }
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
-                }
             }
-            return View("Views/Home/Index.cshtml");
+
+            return View("Views/Home/Index.cshtml", new StoreOfModels());
+
         }
 
         [Route("Logout")]

@@ -26,15 +26,16 @@
             </div>
         </div>
 
-        <div class="mrgn center">
-            <input asp-for="Date" class="form-control date_control" />
-            <span asp-validation-for="Date" class="text-danger"></span>
+        <div class="mrgn">
+            <p style="margin-bottom: 0rem" class="text-color-gray text-size_12">Дата рождения</p>
+            <input asp-for="Day" class="form-control date_control" />
+            <span asp-validation-for="Day" class="text-danger"></span><br />
 
             <input asp-for="Month" class="form-control date_control" />
-            <span asp-validation-for="Month" class="text-danger"></span>
+            <span asp-validation-for="Month" class="text-danger"></span><br />
 
             <input asp-for="Year" class="form-control date_control" />
-            <span asp-validation-for="Year" class="text-danger"></span>
+            <span asp-validation-for="Year" class="text-danger"></span><br />
         </div>
 
         <div>

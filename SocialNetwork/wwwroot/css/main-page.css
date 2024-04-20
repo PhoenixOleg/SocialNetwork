@@ -51,8 +51,7 @@
     margin-bottom: 20px;
 }
 
-.mrgn 
-{
+.mrgn {
     margin: 5px;
 }
 
@@ -92,8 +91,7 @@
     width: 100%;
 }
 
-.main-img 
-{
+.main-img {
     width: 100%;
     max-width: max-content;
 }
@@ -126,13 +124,13 @@ input[type="checkbox"].input-validation-error {
     display: none;
 }
 
-.date_control 
-{
-    width: 25%;
+.date_control {
+    width: 10%;
     display: inline;
     min-width: max-content;
 }
 
-.date_box{
+.date_box {
     width: 100%;
 }
+
