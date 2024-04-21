@@ -56,7 +56,7 @@ namespace SocialNetwork.Controllers.Account
                         else
                         {
                             //return RedirectToAction("Index", "Home");
-                            return View("User");
+                            return View("User", new UserViewModel(userFind));
                         }
                     }
                     else
