@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using SocialNetwork.Models.Users
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<!DOCTYPE html>
 <!-- Это мастер страница - общая часть всех страниц приложения. См. Razor Pages -->
 <!-- Сведения о ней находятся в файле _ViewStart.cshtml -->
 <html lang="en">
@@ -27,9 +32,10 @@
         <div class="container">
             <div class="topnav">
                 <a asp-area="" asp-controller="Home" asp-action="Index" title="Возврат на главную страницу">My learning Social Network</a> 
+                <!-- Видимо здесь добавить отдельный partial с кнопкой выхода -->
+                <partial name="_LogoutPartial" />
                 <!-- Поле поиска -->
                 <partial name="_SearchLayoutPartial" />
-                <!-- Видимо здесь добавить отделный partial с кнопкой выхода -->
             </div>
         </div>
     </header>

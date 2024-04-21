@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using SocialNetwork.Models;
+using SocialNetwork.Models.Users;
 using SocialNetwork.ViewModels.Account;
 
 namespace SocialNetwork

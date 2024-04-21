@@ -1,9 +1,11 @@
 using AutoMapper;
+using AwesomeNetwork.Extentions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using SocialNetwork.Models;
 using SocialNetwork.Models.Context;
+using SocialNetwork.Models.Users;
+using System.Diagnostics.Eventing.Reader;
 using System.Reflection;
 
 namespace SocialNetwork
@@ -23,6 +25,8 @@ namespace SocialNetwork
             // Добавляем контекст ApplicationDbContext в качестве сервиса в приложение
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
 
+            builder.Services.AddUnitOfWork();
+
             // Добавление модели работы с пользователями (установка требований к политике паролей)
             builder.Services.AddIdentity<User, IdentityRole>(opts => {
                 opts.Password.RequiredLength = 5;
@@ -31,8 +35,7 @@ namespace SocialNetwork
                 opts.Password.RequireUppercase = false;
                 opts.Password.RequireDigit = false;
             })
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-
+                .AddEntityFrameworkStores<ApplicationDbContext>();              
 
             #region Подключаем автомаппинг (заменен на более понятный из модуля 33)
             //Закоменченный код из модуля 34
@@ -51,6 +54,7 @@ namespace SocialNetwork
 
             // Add services to the container. ???
             builder.Services.AddControllersWithViews();
+            builder.Services.AddRazorPages();
             #endregion
 
             // Создаем WebApplication
@@ -63,9 +67,21 @@ namespace SocialNetwork
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            else
+            {
+                app.UseDeveloperExceptionPage();
+                //app.UseMigrationsEndPoint(); //Вместо UseDatabaseErrorPage();
+            }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            var cachePeriod = "0";
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                OnPrepareResponse = ctx =>
+                {
+                    ctx.Context.Response.Headers.Append("Cache-Control", $"public, max-age={cachePeriod}");
+                }
+            });
 
             app.UseRouting();
 
@@ -73,9 +89,19 @@ namespace SocialNetwork
             app.UseAuthorization(); //Добавление авторизации
 
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}"); //Обычный маршрут по умолчанию -> контроллер Home, действие Index
+            //app.MapControllerRoute(
+            //    name: "default",
+            //    pattern: "{controller=Home}/{action=Index}/{id?}"); //Обычный маршрут по умолчанию -> контроллер Home, действие Index
+
+
+            app.UseEndpoints(endpoints =>
+            {
+                // определение маршрутов
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
+            });
 
             app.Run();
         }

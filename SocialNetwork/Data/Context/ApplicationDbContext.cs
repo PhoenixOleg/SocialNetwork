@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SocialNetwork.Models;
+using SocialNetwork.Models.Users;
 
 namespace SocialNetwork.Models.Context
 {

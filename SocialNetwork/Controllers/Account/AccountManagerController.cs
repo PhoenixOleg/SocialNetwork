@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using SocialNetwork.Models;
+using SocialNetwork.Models.Users;
 using SocialNetwork.ViewModels.Account;
 
-namespace SocialNetwork.Controllers
+namespace SocialNetwork.Controllers.Account
 {
     public class AccountManagerController : Controller
     {
@@ -65,7 +65,9 @@ namespace SocialNetwork.Controllers
                 }
             }
 
-            return View("Views/Home/Index.cshtml", new StoreOfModels());
+            //return View("Views/Home/Index.cshtml", new StoreOfModels());
+            //return View("Views/Home/Index.cshtml", model);
+            return RedirectToAction("Index", "Home");
 
         }
 

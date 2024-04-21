@@ -1,0 +1,16 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "User";
+}
+
+@model SocialNetwork.ViewModels.Account.UserViewModel
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
+<div>
+    <div>@Model.User.GetFullName()</div>
+</div>

@@ -1,13 +1,20 @@
-﻿@using Microsoft.AspNetCore.Identity;
-@using SocialNetwork.ViewModels.Account
+﻿@using Microsoft.AspNetCore.Identity
+@using SocialNetwork.Models.Users
+
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
-@model StoreOfModels
+@model SocialNetwork.ViewModels.Account.StoreOfModels
 
 @{
     //Определяем ключ-значение для заголовка (используется в _Layout.cshtml)
     ViewData["Title"] = "Главная";
+}
+@* 
+@@@ For Test *@
+@if (SignInManager.IsSignedIn(User))
+{
+    <div>Hello @User.Identity!</div>
 }
 
 <div class="row">
@@ -20,8 +27,8 @@
 
     @* Подключение частичных представлений *@
     <div class="main">
-        <partial name="Login" model="Model.LoginView" />
-        <partial name="Register" model="Model.RegisterView" />
+        <partial name="Login" model="@Model.LoginView" />
+        <partial name="Register" model="@Model.RegisterView" />
     </div>
 
 </div>

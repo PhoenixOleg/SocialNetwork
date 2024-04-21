@@ -5,14 +5,17 @@ namespace SocialNetwork.ViewModels.Account
     public class RegisterViewModel
     {
         [Required(ErrorMessage = "Поле \"{0}\" обязательно для заполнения")]
+        [DataType(DataType.Text)]
         [Display(Name = "Имя", Prompt = "Введите имя")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Поле \"{0}\" обязательно для заполнения")]
         [Display(Name = "Фамилия", Prompt = "Введите фамилию")]
+        [DataType(DataType.Text)]
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Поле \"{0}\" обязательно для заполнения")]
+        [EmailAddress]
         [Display(Name = "Email", Prompt = "Введите адрес электронной почты")]
         public string EmailReg { get; set; }
 

@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using SocialNetwork.Models;
+using SocialNetwork.Models.Users;
 using SocialNetwork.ViewModels.Account;
 
-namespace SocialNetwork.Controllers
+namespace SocialNetwork.Controllers.Account
 {
     public class RegisterController : Controller
     {

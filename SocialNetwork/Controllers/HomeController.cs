@@ -15,6 +15,7 @@ namespace SocialNetwork.Controllers
         }
 
         [Route("")] //Маршрут по умолчанию
+        [Route("[controller]/[action]")]
         public IActionResult Index() // Отображает представление (страницу) /Views/Home/Index.cshtml
         {
             return View(new StoreOfModels()); //Собирает представление из моделей представлений,
