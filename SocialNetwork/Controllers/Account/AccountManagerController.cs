@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SocialNetwork.Extentions;
 using SocialNetwork.Models.Users;
 using SocialNetwork.ViewModels.Account;
 
