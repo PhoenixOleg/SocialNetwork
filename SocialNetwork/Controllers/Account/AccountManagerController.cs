@@ -49,18 +49,28 @@ namespace SocialNetwork.Controllers.Account
                 if (userFind != null)
                 {
                     var result = await _signInManager.PasswordSignInAsync(userFind.UserName, model.Password, model.RememberMe, false);
+                    //if (result.Succeeded)
+                    //{
+                    //    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+                    //    {
+                    //        return Redirect(model.ReturnUrl);                            
+                    //    }
+                    //    else
+                    //    {
+                    //        //return RedirectToAction("Index", "Home");
+                    //        //return View("User", new UserViewModel(userFind));
+                    //        return RedirectToAction("MyPage", "AccountManager");
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
+                    //}
+
+                    //Задание 35.4.6
                     if (result.Succeeded)
                     {
-                        if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
-                        {
-                            return Redirect(model.ReturnUrl);                            
-                        }
-                        else
-                        {
-                            //return RedirectToAction("Index", "Home");
-                            //return View("User", new UserViewModel(userFind));
-                            return RedirectToAction("MyPage", "AccountManager");
-                        }
+                        return RedirectToAction("MyPage", "AccountManager");
                     }
                     else
                     {
