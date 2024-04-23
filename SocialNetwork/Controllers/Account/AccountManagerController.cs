@@ -106,6 +106,21 @@ namespace SocialNetwork.Controllers.Account
             return View("User", new UserViewModel(result.Result));
         }
 
+        //Получение данных для редактирования юзера
+        [Route("Edit")]
+        [HttpGet]
+        public IActionResult Edit()
+        {
+            var user = User;
+            
+            var result = _userManager.GetUserAsync(user);
+
+            var editUserModel = _mapper.Map<UserEditViewModel>(result.Result);
+
+            return View("Edit", editUserModel);
+        }
+
+        //Обновление данных (постим) отредактированного юзера
         [Authorize]
         [Route("Update")]
         [HttpPost]

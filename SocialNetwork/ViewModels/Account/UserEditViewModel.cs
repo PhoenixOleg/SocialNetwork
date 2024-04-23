@@ -1,4 +1,5 @@
 ﻿using SocialNetwork.Models.Users;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace SocialNetwork.ViewModels.Account
@@ -7,7 +8,8 @@ namespace SocialNetwork.ViewModels.Account
     {
         [Required]
         [Display(Name = "Идентификатор пользователя")]
-        public string UserId { get; }
+        [ReadOnly(true)]
+        public string UserId { get; set; }
 
         [Required(ErrorMessage = "Поле \"{0}\" обязательно для заполнения")]
         [DataType(DataType.Text)]
@@ -21,7 +23,7 @@ namespace SocialNetwork.ViewModels.Account
 
         [DataType(DataType.Text)]
         [Display(Name = "Отчество", Prompt = "Введите отчество")]
-        public string MiddleName { get; set; }
+        public string? MiddleName { get; set; }
 
         [DataType(DataType.Date)]
         [Display(Name = "Дата рождения")]

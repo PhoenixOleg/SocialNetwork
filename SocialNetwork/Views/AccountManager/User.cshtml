@@ -6,7 +6,9 @@
             <!-- Тут фото и кнопка редактировать -->
             <img class="main-img" src="@Model.User.Image" />
             <div class="center">
-                <button class="enter_submit">Редактировать</button>
+                <form method="get" asp-controller="AccountManager" asp-action="Edit">
+                    <button class="enter_submit">Редактировать</button>
+                </form>
             </div>
         </div>
         <div class="side">
