@@ -57,8 +57,8 @@ namespace SocialNetwork.Controllers.Account
                         else
                         {
                             //return RedirectToAction("Index", "Home");
-                            return View("User", new UserViewModel(userFind));
-                            //return RedirectToAction("MyPage", "AccountManager");
+                            //return View("User", new UserViewModel(userFind));
+                            return RedirectToAction("MyPage", "AccountManager");
                         }
                     }
                     else
@@ -83,9 +83,9 @@ namespace SocialNetwork.Controllers.Account
             return RedirectToAction("Index", "Home");
         }
 
-        [Authorize]
         [Route("MyPage")]
-        [HttpPost]
+        [HttpGet]
+        [Authorize]
         public IActionResult MyPage()
         {
             var user = User;
