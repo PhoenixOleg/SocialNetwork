@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.Models.Users;
@@ -57,6 +58,7 @@ namespace SocialNetwork.Controllers.Account
                         {
                             //return RedirectToAction("Index", "Home");
                             return View("User", new UserViewModel(userFind));
+                            //return RedirectToAction("MyPage", "AccountManager");
                         }
                     }
                     else
@@ -79,6 +81,18 @@ namespace SocialNetwork.Controllers.Account
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        [Route("MyPage")]
+        [HttpPost]
+        public IActionResult MyPage()
+        {
+            var user = User;
+
+            var result = _userManager.GetUserAsync(user);
+
+            return View("User", new UserViewModel(result.Result));
         }
     }
 }
