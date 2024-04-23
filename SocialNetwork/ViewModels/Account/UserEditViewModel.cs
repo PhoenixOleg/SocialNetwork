@@ -33,6 +33,7 @@ namespace SocialNetwork.ViewModels.Account
         public string Email { get; set; }
 
         //Так как начал писать, что Никнейм - поле не дублирующее емэйл, то пока так и оставляю. Ну пока не обломаюсь на реализации
+        //public string UserName => Email;
         [Required(ErrorMessage = "Поле \"{0}\" обязательно для заполнения")]
         [Display(Name = "Никнейм", Prompt = "Никнейм")]
         public string Login { get; set; }
