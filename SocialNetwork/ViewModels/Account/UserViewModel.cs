@@ -10,6 +10,5 @@ namespace SocialNetwork.ViewModels.Account
         {
             User = user;
         }
-
     }
 }
