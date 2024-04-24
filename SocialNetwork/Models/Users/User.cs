@@ -22,7 +22,8 @@ namespace SocialNetwork.Models.Users
 
         public string GetFullName()
         {
-            return FirstName + " " + MiddleName + " " + LastName;
+            //Если нет отчества заменяем двйной пробел одним. Иначе поиска не будет
+            return (FirstName + " " + MiddleName + " " + LastName).Replace("  ", " ");
         }
 
         public User()
