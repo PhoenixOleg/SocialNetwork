@@ -109,7 +109,7 @@ namespace SocialNetwork.Controllers.Account
         //Получение данных для редактирования юзера
         [Route("Edit")]
         [HttpGet]
-        public IActionResult Edit()
+        public IActionResult Edit() //@@@
         {
             var user = User;
             
@@ -147,6 +147,17 @@ namespace SocialNetwork.Controllers.Account
                 ModelState.AddModelError("", "Некорректные данные");
                 return View("Edit", model);
             }
+        }
+
+        [Route("UserList")]
+        [HttpGet]
+        public IActionResult UserList()
+        {
+            var model = new SearchViewModel
+            {
+                UserList = _userManager.Users.ToList()
+            };
+            return View("UserList", model);
         }
     }
 }
