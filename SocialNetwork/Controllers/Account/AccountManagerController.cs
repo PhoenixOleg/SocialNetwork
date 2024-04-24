@@ -156,7 +156,7 @@ namespace SocialNetwork.Controllers.Account
             var model = new SearchViewModel
             {
                 //UserList = _userManager.Users.ToList()
-                UserList = _userManager.Users.AsEnumerable().Where(x => x.GetFullName().Contains(search)).ToList()
+                UserList = _userManager.Users.AsEnumerable().Where(x => x.GetFullName().ToUpper().Contains(search.ToUpper())).ToList()
             };
             return View("UserList", model);
         }
