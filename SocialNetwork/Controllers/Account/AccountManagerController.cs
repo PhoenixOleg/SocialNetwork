@@ -178,7 +178,25 @@ namespace SocialNetwork.Controllers.Account
             return RedirectToAction("MyPage", "AccountManager");
         }
 
-    private async Task<SearchViewModel> CreateSearch(string search)
+        [Route("DeleteFriend")]
+        [HttpPost]
+        public async Task<IActionResult> DeleteFriend(string id)
+        {
+            var currentuser = User;
+
+            var findUser = await _userManager.GetUserAsync(currentuser);
+
+            var friend = await _userManager.FindByIdAsync(id);
+
+            var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
+            
+            repository.DeleteFriend(findUser, friend);
+
+            return RedirectToAction("MyPage", "AccountManager");
+        }
+
+        #region Library
+        private async Task<SearchViewModel> CreateSearch(string search)
         {
             var currentuser = User;
 
@@ -213,5 +231,6 @@ namespace SocialNetwork.Controllers.Account
 
             return repository.GetFriendsByUser(result);
         }
+        #endregion #region Library
     }
 }
