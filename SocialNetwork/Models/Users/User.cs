@@ -14,7 +14,7 @@ namespace SocialNetwork.Models.Users
 
         //@@@ Тут должен быть город - его ID
 
-        public string Image { get; set; }
+        public string Image { get; set; } = "https://thispersondoesnotexist.com";
 
         public string Status { get; set; }
 

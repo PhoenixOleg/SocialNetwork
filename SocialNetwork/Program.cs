@@ -3,6 +3,7 @@ using AwesomeNetwork.Extentions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using SocialNetwork.Data.Repository;
 using SocialNetwork.Models.Context;
 using SocialNetwork.Models.Users;
 using System.Diagnostics.Eventing.Reader;
@@ -25,7 +26,9 @@ namespace SocialNetwork
             // ƒобавл€ем контекст ApplicationDbContext в качестве сервиса в приложение
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
 
-            builder.Services.AddUnitOfWork();
+            builder.Services
+                .AddUnitOfWork()
+                .AddCustomRepository<Friend, FriendsRepository>();
 
             // ƒобавление модели работы с пользовател€ми (установка требований к политике паролей)
             builder.Services.AddIdentity<User, IdentityRole>(opts => {
@@ -34,7 +37,7 @@ namespace SocialNetwork
                 opts.Password.RequireLowercase = false;
                 opts.Password.RequireUppercase = false;
                 opts.Password.RequireDigit = false;
-            })
+            })               
                 .AddEntityFrameworkStores<ApplicationDbContext>();              
 
             #region ѕодключаем автомаппинг (заменен на более пон€тный из модул€ 33)
