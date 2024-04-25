@@ -116,7 +116,7 @@ namespace SocialNetwork.Controllers.Account
         public IActionResult Edit() //@@@
         {
             var user = User;
-            
+
             var result = _userManager.GetUserAsync(user);
 
             var editUserModel = _mapper.Map<UserEditViewModel>(result.Result);
@@ -161,7 +161,24 @@ namespace SocialNetwork.Controllers.Account
             return View("UserList", model);
         }
 
-        private async Task<SearchViewModel> CreateSearch(string search)
+        [Route("AddFriend")]
+        [HttpPost]
+        public async Task<IActionResult> AddFriend(string id)
+        {
+            var currentuser = User;
+
+            var findUser = await _userManager.GetUserAsync(currentuser);
+
+            var friend = await _userManager.FindByIdAsync(id);
+
+            var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
+
+            repository.AddFriend(findUser, friend);
+            
+            return RedirectToAction("MyPage", "AccountManager");
+        }
+
+    private async Task<SearchViewModel> CreateSearch(string search)
         {
             var currentuser = User;
 
