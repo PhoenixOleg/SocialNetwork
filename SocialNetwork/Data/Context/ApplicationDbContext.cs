@@ -16,7 +16,9 @@ namespace SocialNetwork.Models.Context
         {
             base.OnModelCreating(builder);
 
-            builder.ApplyConfiguration<Friend>(new FriendConfiguration());
+            builder
+                .ApplyConfiguration<Friend>(new FriendConfiguration())
+                .ApplyConfiguration<Message>(new MessageConfiguration());
         }
     }
 }
