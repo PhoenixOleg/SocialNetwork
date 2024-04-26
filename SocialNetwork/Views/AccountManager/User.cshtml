@@ -43,6 +43,23 @@
             <br />
             <div>
                 <label class="text-color-gray">Список друзей</label>
+                @foreach (var friend in @Model.Friends)
+                {
+                    <div>
+                        <div>
+                            <label>@friend.GetFullName()</label>
+                            <br />
+                            <label class="small">(@friend.UserName)</label>
+                        </div>
+                        <div>
+                            <form asp-controller="AccountManager" asp-action="DeleteFriend" asp-route-id="@friend.Id" method="post">
+                                <button type="submit" class="btn btn-sm btn-primary">
+                                    Удалить из друзей
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>

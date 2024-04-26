@@ -101,13 +101,16 @@ namespace SocialNetwork.Controllers.Account
         [Route("MyPage")]
         [HttpGet]
         [Authorize]
-        public IActionResult MyPage()
+        public async Task<IActionResult> MyPage()
         {
             var user = User;
 
-            var result = _userManager.GetUserAsync(user);
+            var result = await _userManager.GetUserAsync(user);
 
-            return View("User", new UserViewModel(result.Result));
+            var model = new UserViewModel(result);
+            model.Friends = await GetAllFriend(model.User);
+
+            return View("User", model);
         }
 
         //Получение данных для редактирования юзера
@@ -219,6 +222,17 @@ namespace SocialNetwork.Controllers.Account
             };
 
             return model;
+        }
+
+        private async Task<List<User>> GetAllFriend(User user)
+        {
+            //var user = User;
+
+            //var result = await _userManager.GetUserAsync(user);
+
+            var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
+
+            return repository.GetFriendsByUser(user);
         }
 
         private async Task<List<User>> GetAllFriend()
