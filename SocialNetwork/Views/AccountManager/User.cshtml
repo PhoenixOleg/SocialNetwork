@@ -46,12 +46,15 @@
                 @foreach (var friend in @Model.Friends)
                 {
                     <div>
-                        <div>
+                        <div class ="mrgn center-align">
+                            <img src="@friend.Image" class="ava" />
+                        </div>
+                        <div class="mrgn center-align">
                             <label>@friend.GetFullName()</label>
                             <br />
                             <label class="small">(@friend.UserName)</label>
                         </div>
-                        <div>
+                        <div class="mrgn center-align">
                             <form asp-controller="AccountManager" asp-action="DeleteFriend" asp-route-id="@friend.Id" method="post">
                                 <button type="submit" class="btn btn-sm btn-primary">
                                     Удалить из друзей

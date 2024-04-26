@@ -56,3 +56,15 @@
         border: 1px solid #ccc;
     }
 }
+
+.center-align {
+    align-content: center;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ava {
+    width: 20%;
+    max-width: max-content;
+}
