@@ -28,7 +28,8 @@ namespace SocialNetwork
 
             builder.Services
                 .AddUnitOfWork()
-                .AddCustomRepository<Friend, FriendsRepository>();
+                .AddCustomRepository<Friend, FriendsRepository>()
+                .AddCustomRepository<Message, MessageRepository>();
 
             // Добавление модели работы с пользователями (установка требований к политике паролей)
             builder.Services.AddIdentity<User, IdentityRole>(opts => {
