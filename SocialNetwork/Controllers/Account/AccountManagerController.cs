@@ -178,6 +178,9 @@ namespace SocialNetwork.Controllers.Account
 
             repository.AddFriend(findUser, friend);
             
+            //Типа autoaccept друга
+            repository.AddFriend(friend, findUser); 
+
             return RedirectToAction("MyPage", "AccountManager");
         }
 
@@ -194,6 +197,9 @@ namespace SocialNetwork.Controllers.Account
             var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
             
             repository.DeleteFriend(findUser, friend);
+            
+            //Автовыпил из друзей
+            repository.DeleteFriend(friend, findUser);
 
             return RedirectToAction("MyPage", "AccountManager");
         }

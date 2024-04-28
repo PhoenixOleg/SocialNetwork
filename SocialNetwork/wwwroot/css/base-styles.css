@@ -75,8 +75,27 @@
     margin-right: auto;
 }
 
+.left-align {
+    align-content: left;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.right-align {
+    align-content: right;
+    text-align: right;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .ava {
     width: 100%;
+    max-width: max-content;
+}
+
+.ava-small {
+    width: 30%;
     max-width: max-content;
 }
 
@@ -97,3 +116,21 @@
         display: inline-block;
         max-width: 150px;
     }
+
+    .friendbox .picdiv {
+        display: inline-block;
+        width: 30%;
+        vertical-align:top;
+    }
+    
+    .friendbox .chatdiv {
+        display: inline-block;
+        width: 40%;
+    }
+
+textarea {
+    height: 32px;
+    border: none;
+    outline: none;
+    overflow: hidden;
+}

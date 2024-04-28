@@ -2,25 +2,54 @@
 
 <div>
     <h3 class="center-align">Чат @Model.You с @Model.ToWhom</h3>
-    @if (Model.MessagesHistory.Count != 0)
-    {
-        <div>
-            @foreach (var msg in @Model.MessagesHistory)
+
+    <div class="friendbox">
+        <div class="picdiv">
+            <img src="@Model.You.Image" class="ava" />
+            </div>
+        <div class="picdiv">
+            <img src="@Model.ToWhom.Image" class="ava" />
+        </div>
+
+        <div class="chatdiv">
+            @if (@Model.MessagesHistory.Count != 0)
             {
-                <label>msg</label>
+                <div>
+                    @foreach (var msg in @Model.MessagesHistory)
+                    {
+                        @if (@Model.You.Id == @msg.Sender.Id)
+                        {
+                            <div class="left-align">
+                                <label><b>@msg.Sender.FirstName:</b></label>
+                                <br />
+                                <pre>@msg.Text</pre>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="right-align">
+                                <label><b>@msg.Sender.FirstName:</b></label>
+                                <br />
+                                <pre>@msg.Text</pre>
+                            </div>
+                        }
+                    }
+                </div>
             }
+            else
+            {
+                <div>
+                    <label>Ваша переписка пуста. Начните общение первым!</label>
+                </div>
+            }
+            <div class="center">
+                <label class="gray-text">Новое сообщение</label>
+                <form method="post" asp-controller="AccountManager" asp-action="NewMessage" asp-route-id="@Model.ToWhom.Id">
+                    @* <input type="text" asp-for="NewMessage.Text" class="form-control emojify" /> *@
+                    <textarea asp-for="NewMessage.Text" class="form-control emojify"> </textarea>
+                    <button class="MyBlock enter_submit">Отправить</button>
+                </form>
+            </div>
         </div>
-    }
-    else
-    {
-        <div>
-            <label>Ваша переписка пуста. Начните общение первым!</label>
-        </div>
-    }
-    <div class="center">
-        <form method="post" asp-controller="AccountManager" asp-action="NewMessage">
-            <input type="text" asp-for = "NewMessage.Text"/>
-            <button class="enter_submit">Отправить</button>
-        </form>
     </div>
 </div>
