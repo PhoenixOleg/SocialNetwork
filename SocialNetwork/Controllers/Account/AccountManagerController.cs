@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SocialNetwork.Data;
 using SocialNetwork.Data.Repository;
 using SocialNetwork.Data.UoW;
 using SocialNetwork.Extentions;
@@ -264,7 +265,27 @@ namespace SocialNetwork.Controllers.Account
                 ToWhom = friend,
                 MessagesHistory = mess.OrderBy(x => x.Id).ToList(),
             };
+            //Тут проблема с автообновлением страницы при авторефреше после отправки сообщения
             return View("Chat", model);
+        }
+
+        [Route("Generate")]
+        [HttpGet]
+        public async Task<IActionResult> Generate()
+        {
+
+            var usergen = new GenetateUsers();
+            var userlist = usergen.Populate(35);
+
+            foreach (var user in userlist)
+            {
+                var result = await _userManager.CreateAsync(user, "12345");
+
+                if (!result.Succeeded)
+                    continue;
+            }
+
+             return RedirectToAction("Index", "Home");
         }
 
         #region Library
@@ -295,10 +316,6 @@ namespace SocialNetwork.Controllers.Account
 
         private async Task<List<User>> GetAllFriend(User user)
         {
-            //var user = User;
-
-            //var result = await _userManager.GetUserAsync(user);
-
             var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
 
             return repository.GetFriendsByUser(user);

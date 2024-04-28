@@ -12,8 +12,6 @@ namespace SocialNetwork.Models.Users
 
         public DateTime BirthDate { get; set; }
 
-        //@@@ Тут должен быть город - его ID
-
         public string Image { get; set; } = "https://thispersondoesnotexist.com";
 
         public string Status { get; set; }
