@@ -226,6 +226,17 @@ namespace SocialNetwork.Controllers.Account
             return View("Chat", model);
         }
 
+        [Route("Chat")]
+        [HttpGet]
+        public async Task<IActionResult> Chat()
+        {
+
+            var id = Request.Query["id"];
+
+            var model = await GenerateChat(id);
+            return View("Chat", model);
+        }
+
         [Route("NewMessage")]
         [HttpPost]
         public async Task<IActionResult> NewMessage(string id, ChatViewModel chat)
@@ -303,6 +314,28 @@ namespace SocialNetwork.Controllers.Account
 
             return repository.GetFriendsByUser(result);
         }
+
+        private async Task<ChatViewModel> GenerateChat(string id)
+        {
+            var currentuser = User;
+
+            var result = await _userManager.GetUserAsync(currentuser);
+            var friend = await _userManager.FindByIdAsync(id);
+
+            var repository = _unitOfWork.GetRepository<Message>() as MessageRepository;
+
+            var mess = repository.GetMessages(result, friend);
+
+            var model = new ChatViewModel()
+            {
+                You = result,
+                ToWhom = friend,
+                MessagesHistory = mess.OrderBy(x => x.Id).ToList(),
+            };
+
+            return model;
+        }
+
         #endregion #region Library
     }
 }

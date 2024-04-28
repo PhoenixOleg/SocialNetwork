@@ -1,7 +1,12 @@
 ﻿@model SocialNetwork.ViewModels.Account.ChatViewModel
 
+<meta http-equiv="refresh" content="5">
 <div>
     <h3 class="center-align">Чат @Model.You с @Model.ToWhom</h3>
+    
+    <form method="get" asp-controller="AccountManager" asp-action="MyPage">
+    <button class="enter_submit">Вернуться на домашнюю страницу</button>
+    </form>
 
     <div class="friendbox">
         <div class="picdiv">
@@ -46,8 +51,9 @@
                 <label class="gray-text">Новое сообщение</label>
                 <form method="post" asp-controller="AccountManager" asp-action="NewMessage" asp-route-id="@Model.ToWhom.Id">
                     @* <input type="text" asp-for="NewMessage.Text" class="form-control emojify" /> *@
+                    @*Успеть ввести за 5 секунд))) До рефреша*@
                     <textarea asp-for="NewMessage.Text" class="form-control emojify"> </textarea>
-                    <button class="MyBlock enter_submit">Отправить</button>
+                    <button class="enter_submit">Отправить</button>
                 </form>
             </div>
         </div>
