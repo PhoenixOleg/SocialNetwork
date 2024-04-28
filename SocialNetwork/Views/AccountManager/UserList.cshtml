@@ -1,5 +1,9 @@
-﻿@model SocialNetwork.ViewModels.Account.SearchViewModel;
+﻿@using Microsoft.AspNetCore.Identity
+@using SocialNetwork.Models.Users
+@model SocialNetwork.ViewModels.Account.SearchViewModel;
 
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
 <div class="block-reg background-white">
 
@@ -8,20 +12,30 @@
 
         @foreach (var user in @Model.UserList)
         {
-            <div>
+            <div class="center-align mrgn">
+                <img src="@user.Image" class="ava-smallest" />
+                <br />
                 <label>@user.GetFullName()</label>
-                @if (!@user.IsFriendWithCurrent)
+                <br />
+                <label>@user.Status</label>
+                <br />
+                <label>@user.About</label>
+
+                @if (SignInManager.IsSignedIn(User))
                 {
-                    <form asp-controller="AccountManager" asp-action="AddFriend" asp-route-id="@user.Id" method="post">
-                        <button type="submit" class="btn btn-sm btn-primary">
-                            Добавить в друзья
-                        </button>
-                    </form>
-                }
-                else
-                {
-                    <br />
-                    <label class="fst-italic">Ваш друг</label>
+                    @if (!@user.IsFriendWithCurrent)
+                    {
+                        <form asp-controller="AccountManager" asp-action="AddFriend" asp-route-id="@user.Id" method="post">
+                            <button type="submit" class="btn btn-sm btn-primary">
+                                Добавить в друзья
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <br />
+                        <label class="fst-italic">Ваш друг</label>
+                    }
                 }
             </div>
         }

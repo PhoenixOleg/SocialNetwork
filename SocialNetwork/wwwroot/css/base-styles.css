@@ -99,6 +99,10 @@
     max-width: max-content;
 }
 
+.ava-smallest {
+    width: 10%;
+    max-width: max-content;
+}
 .min-width-but {
     max-width: 150px;
     width: 100%;
