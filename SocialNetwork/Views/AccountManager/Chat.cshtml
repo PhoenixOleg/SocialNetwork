@@ -1,5 +1,26 @@
 ﻿@model SocialNetwork.ViewModels.Account.ChatViewModel
+
 <div>
     <h3 class="center-align">Чат @Model.You с @Model.ToWhom</h3>
-
+    @if (Model.MessagesHistory.Count != 0)
+    {
+        <div>
+            @foreach (var msg in @Model.MessagesHistory)
+            {
+                <label>msg</label>
+            }
+        </div>
+    }
+    else
+    {
+        <div>
+            <label>Ваша переписка пуста. Начните общение первым!</label>
+        </div>
+    }
+    <div class="center">
+        <form method="post" asp-controller="AccountManager" asp-action="NewMessage">
+            <input type="text" asp-for = "NewMessage.Text"/>
+            <button class="enter_submit">Отправить</button>
+        </form>
+    </div>
 </div>
