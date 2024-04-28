@@ -269,6 +269,16 @@ namespace SocialNetwork.Controllers.Account
             return View("Chat", model);
         }
 
+        //Чиним авторефреш
+        [Route("NewMessage")]
+        [HttpGet]
+        public async Task<IActionResult> NewMessage(string id)
+        {
+            var model = await GenerateChat(id);
+ 
+            return View("Chat", model);
+        }
+
         [Route("Generate")]
         [HttpGet]
         public async Task<IActionResult> Generate()
