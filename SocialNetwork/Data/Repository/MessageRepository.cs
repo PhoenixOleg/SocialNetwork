@@ -11,13 +11,13 @@ namespace SocialNetwork.Data.Repository
 
         }
 
-        public List<Message> GetMessages(User sender, User recipient)
+        public async Task<List<Message>> GetMessages(User sender, User recipient)
         {
             Set.Include(x => x.Recipient);
             Set.Include(x => x.Sender);
 
-            var from = Set.AsEnumerable().Where(x => x.SenderId == sender.Id && x.RecipientId == recipient.Id).ToList();
-            var to = Set.AsEnumerable().Where(x => x.SenderId == recipient.Id && x.RecipientId == sender.Id).ToList();
+            var from = await Set.Where(x => x.SenderId == sender.Id && x.RecipientId == recipient.Id).ToListAsync();
+            var to = await Set.Where(x => x.SenderId == recipient.Id && x.RecipientId == sender.Id).ToListAsync();
 
             var itog = new List<Message>();
             itog.AddRange(from);

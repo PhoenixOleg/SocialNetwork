@@ -22,10 +22,10 @@
         </div>
 
         <div class="chatdiv">
-            @if (@Model.MessagesHistory.Count != 0)
+            @if (@Model.MessagesHistory.Count() != 0)
             {
                 <div>
-                    @foreach (var msg in @Model.MessagesHistory)
+                    @foreach (var @msg in @Model.MessagesHistory)
                     {
                         @if (@Model.You.Id == @msg.Sender.Id)
                         {
@@ -58,8 +58,6 @@
                     <div asp-validation-summary="ModelOnly"></div>
                     @*Успеть ввести за 5 секунд))) До рефреша*@
                     <textarea asp-for="NewMessage.Text" class="form-control emojify"> </textarea>
-                    @* <input type="text" asp-for="NewMessage.Text" class="form-control emojify" /> *@
-                    @* <input asp-for="NewMessage.Text" class="form-control emojify" type="text" autocomplete="off" /> *@
                     <button class="enter_submit" type="submit">Отправить</button>
                 </form>
             </div>

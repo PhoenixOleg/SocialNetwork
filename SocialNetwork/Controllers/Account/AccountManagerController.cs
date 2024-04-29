@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SocialNetwork.Data;
 using SocialNetwork.Data.Repository;
@@ -35,7 +36,7 @@ namespace SocialNetwork.Controllers.Account
         }
 
         [HttpGet]
-        public IActionResult Login(string returnUrl = null)
+        public IActionResult Login(string? returnUrl = null)
         {
             return View(new LoginViewModel { ReturnUrl = returnUrl });
         }
@@ -55,24 +56,6 @@ namespace SocialNetwork.Controllers.Account
                 if (userFind != null)
                 {
                     var result = await _signInManager.PasswordSignInAsync(userFind.UserName, model.Password, model.RememberMe, false);
-                    //if (result.Succeeded)
-                    //{
-                    //    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
-                    //    {
-                    //        return Redirect(model.ReturnUrl);                            
-                    //    }
-                    //    else
-                    //    {
-                    //        //return RedirectToAction("Index", "Home");
-                    //        //return View("User", new UserViewModel(userFind));
-                    //        return RedirectToAction("MyPage", "AccountManager");
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
-                    //}
-
                     //Задание 35.4.6
                     if (result.Succeeded)
                     {
@@ -85,8 +68,6 @@ namespace SocialNetwork.Controllers.Account
                 }
             }
 
-            //return View("Views/Home/Index.cshtml", new StoreOfModels());
-            //return View("Views/Home/Index.cshtml", model);
             return RedirectToAction("Index", "Home");
 
         }
@@ -178,10 +159,10 @@ namespace SocialNetwork.Controllers.Account
 
             var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
 
-            repository.AddFriend(findUser, friend);
+            await repository.AddFriend(findUser, friend);
 
             //Типа autoaccept друга
-            repository.AddFriend(friend, findUser);
+            await repository.AddFriend(friend, findUser);
 
             return RedirectToAction("MyPage", "AccountManager");
         }
@@ -198,10 +179,10 @@ namespace SocialNetwork.Controllers.Account
 
             var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
 
-            repository.DeleteFriend(findUser, friend);
+            await repository.DeleteFriend(findUser, friend);
 
             //Автовыпил из друзей
-            repository.DeleteFriend(friend, findUser);
+            await repository.DeleteFriend(friend, findUser);
 
             return RedirectToAction("MyPage", "AccountManager");
         }
@@ -217,7 +198,7 @@ namespace SocialNetwork.Controllers.Account
 
             var repository = _unitOfWork.GetRepository<Message>() as MessageRepository;
 
-            var mess = repository.GetMessages(result, friend);
+            var mess = await repository.GetMessages(result, friend);
 
             var model = new ChatViewModel()
             {
@@ -251,7 +232,7 @@ namespace SocialNetwork.Controllers.Account
 
             var repository = _unitOfWork.GetRepository<Message>() as MessageRepository;
 
-            //Проверка на не пустоту сообщения - Иначе вылет
+            //Проверка на непустоту сообщения - Иначе вылет
             if (!chat.NewMessage.Text.IsNullOrEmpty())
             {
                 var item = new Message()
@@ -260,10 +241,10 @@ namespace SocialNetwork.Controllers.Account
                     Recipient = friend,
                     Text = chat.NewMessage.Text,
                 };
-                repository.Create(item);
+                await repository.Create(item);
             }
 
-            var mess = repository.GetMessages(result, friend);
+            var mess = await repository.GetMessages(result, friend);
 
             var model = new ChatViewModel()
             {
@@ -314,15 +295,21 @@ namespace SocialNetwork.Controllers.Account
             var result = await _userManager.GetUserAsync(currentuser);
 
             //Задание 35.6.6
-            var list = _userManager.Users.AsEnumerable().ToList();
+            var list = await _userManager.Users.AsQueryable().ToListAsync();
+
             if (!string.IsNullOrEmpty(search))
             {
-                list = list.Where(x => x.GetFullName().ToLower().Contains(search.ToLower())).ToList();
+                list = list.Where(x => x.GetFullName().ToUpper().Contains(search.ToUpper())).ToList();
             }
-
-            //var list = _userManager.Users.AsEnumerable().Where(x => x.GetFullName().ToUpper().Contains(search.ToUpper())).ToList();
-            var withfriend = await GetAllFriend();
-
+        
+            List<User> withfriend = new();
+            //Если пользователь не авторизован, то искать друзей нет смысла и даст ошибку
+            //Либо для неавторизованых делать редирект на Index без поиска (для закрытой сети)
+            if (currentuser.Identity.IsAuthenticated)
+            {
+                withfriend = await GetAllFriend();
+            }
+          
             var data = new List<UserWithFriendExt>();
             list.ForEach(x =>
             {
@@ -343,7 +330,7 @@ namespace SocialNetwork.Controllers.Account
         {
             var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
 
-            return repository.GetFriendsByUser(user);
+            return await repository.GetFriendsByUser(user);
         }
 
         private async Task<List<User>> GetAllFriend()
@@ -354,7 +341,7 @@ namespace SocialNetwork.Controllers.Account
 
             var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
 
-            return repository.GetFriendsByUser(result);
+            return await repository.GetFriendsByUser(result);
         }
 
         private async Task<ChatViewModel> GenerateChat(string id)
@@ -366,13 +353,13 @@ namespace SocialNetwork.Controllers.Account
 
             var repository = _unitOfWork.GetRepository<Message>() as MessageRepository;
 
-            var mess = repository.GetMessages(result, friend);
+            var mess = await repository.GetMessages(result, friend);
 
             var model = new ChatViewModel()
             {
                 You = result,
                 ToWhom = friend,
-                MessagesHistory = mess.OrderBy(x => x.Id).ToList(),
+                MessagesHistory = await mess.AsQueryable().OrderBy(x => x.Id).ToListAsync(),
             };
 
             return model;
