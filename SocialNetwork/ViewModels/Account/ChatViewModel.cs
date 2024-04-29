@@ -1,4 +1,5 @@
 ﻿using SocialNetwork.Models.Users;
+using System.ComponentModel.DataAnnotations;
 
 namespace SocialNetwork.ViewModels.Account
 {
@@ -9,6 +10,7 @@ namespace SocialNetwork.ViewModels.Account
 
         public List<Message> MessagesHistory { get; set; }
 
+        [Required]
         public MessageViewModel NewMessage { get; set; }
 
         public ChatViewModel() 

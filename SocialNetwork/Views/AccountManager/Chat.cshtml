@@ -1,7 +1,12 @@
 ﻿@model SocialNetwork.ViewModels.Account.ChatViewModel
 
-<meta http-equiv="refresh" content="5">
-<div>
+@* <meta http-equiv="refresh" content="5"> *@
+
+@* Для валидации *@
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
+
+<div class="block-reg background-white">
     <h3 class="center-align">Чат @Model.You с @Model.ToWhom</h3>
     
     <form method="get" asp-controller="AccountManager" asp-action="MyPage">
@@ -50,9 +55,11 @@
             <div class="center">
                 <label class="gray-text">Новое сообщение</label>
                 <form method="post" asp-controller="AccountManager" asp-action="NewMessage" asp-route-id="@Model.ToWhom.Id">
-                    @* <input type="text" asp-for="NewMessage.Text" class="form-control emojify" /> *@
+                    <div asp-validation-summary="ModelOnly"></div>
                     @*Успеть ввести за 5 секунд))) До рефреша*@
                     <textarea asp-for="NewMessage.Text" class="form-control emojify"> </textarea>
+                    @* <input type="text" asp-for="NewMessage.Text" class="form-control emojify" /> *@
+                    @* <input asp-for="NewMessage.Text" class="form-control emojify" type="text" autocomplete="off" /> *@
                     <button class="enter_submit" type="submit">Отправить</button>
                 </form>
             </div>

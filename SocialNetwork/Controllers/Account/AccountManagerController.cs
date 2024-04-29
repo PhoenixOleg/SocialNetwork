@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using SocialNetwork.Data;
 using SocialNetwork.Data.Repository;
 using SocialNetwork.Data.UoW;
@@ -117,13 +118,13 @@ namespace SocialNetwork.Controllers.Account
         //Получение данных для редактирования юзера
         [Route("Edit")]
         [HttpGet]
-        public IActionResult Edit() //@@@
+        public async Task<IActionResult> Edit()
         {
             var user = User;
 
-            var result = _userManager.GetUserAsync(user);
+            var result = await _userManager.GetUserAsync(user);
 
-            var editUserModel = _mapper.Map<UserEditViewModel>(result.Result);
+            var editUserModel = _mapper.Map<UserEditViewModel>(result);
 
             return View("Edit", editUserModel);
         }
@@ -178,9 +179,9 @@ namespace SocialNetwork.Controllers.Account
             var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
 
             repository.AddFriend(findUser, friend);
-            
+
             //Типа autoaccept друга
-            repository.AddFriend(friend, findUser); 
+            repository.AddFriend(friend, findUser);
 
             return RedirectToAction("MyPage", "AccountManager");
         }
@@ -196,9 +197,9 @@ namespace SocialNetwork.Controllers.Account
             var friend = await _userManager.FindByIdAsync(id);
 
             var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
-            
+
             repository.DeleteFriend(findUser, friend);
-            
+
             //Автовыпил из друзей
             repository.DeleteFriend(friend, findUser);
 
@@ -242,6 +243,7 @@ namespace SocialNetwork.Controllers.Account
         [HttpPost]
         public async Task<IActionResult> NewMessage(string id, ChatViewModel chat)
         {
+
             var currentuser = User;
 
             var result = await _userManager.GetUserAsync(currentuser);
@@ -249,13 +251,17 @@ namespace SocialNetwork.Controllers.Account
 
             var repository = _unitOfWork.GetRepository<Message>() as MessageRepository;
 
-            var item = new Message()
+            //Проверка на не пустоту сообщения - Иначе вылет
+            if (!chat.NewMessage.Text.IsNullOrEmpty())
             {
-                Sender = result,
-                Recipient = friend,
-                Text = chat.NewMessage.Text,
-            };
-            repository.Create(item);
+                var item = new Message()
+                {
+                    Sender = result,
+                    Recipient = friend,
+                    Text = chat.NewMessage.Text,
+                };
+                repository.Create(item);
+            }
 
             var mess = repository.GetMessages(result, friend);
 
@@ -265,7 +271,9 @@ namespace SocialNetwork.Controllers.Account
                 ToWhom = friend,
                 MessagesHistory = mess.OrderBy(x => x.Id).ToList(),
             };
-            //Тут проблема с автообновлением страницы при авторефреше после отправки сообщения
+
+            ModelState.Clear(); //Чтобы очищалось поле ввода сообщения
+            //Тут проблема с автообновлением страницы при авторефреше после отправки сообщения - решена (см. ниже)
             return View("Chat", model);
         }
 
@@ -275,7 +283,7 @@ namespace SocialNetwork.Controllers.Account
         public async Task<IActionResult> NewMessage(string id)
         {
             var model = await GenerateChat(id);
- 
+
             return View("Chat", model);
         }
 
@@ -295,7 +303,7 @@ namespace SocialNetwork.Controllers.Account
                     continue;
             }
 
-             return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         #region Library

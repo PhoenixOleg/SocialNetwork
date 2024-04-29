@@ -16,6 +16,11 @@ namespace SocialNetwork.Models.Context
         {
             base.OnModelCreating(builder);
 
+            //Так как у меня логин именно Email, а не UserName, то делаем его уникальным
+            builder.Entity<User>()
+            .HasIndex(u => u.Email)
+            .IsUnique();
+
             builder
                 .ApplyConfiguration<Friend>(new FriendConfiguration())
                 .ApplyConfiguration<Message>(new MessageConfiguration());
