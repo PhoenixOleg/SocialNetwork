@@ -50,13 +50,15 @@
                         @foreach (var friend in @Model.Friends)
                         {
                             <div class="datadiv">
-                                <div class="mrgn center-align">
-                                    <img src="@friend.Image" class="ava" />
-                                </div>
-                                <div class="mrgn center-align">
-                                    <label>@friend.GetFullName()</label>
-                                    <br />
-                                    <label class="small">(@friend.UserName)</label>
+                                <div class="align-div">
+                                    <div class="mrgn center-align">
+                                        <img src="@friend.Image" class="ava" />
+                                    </div>
+                                    <div class="mrgn center-align datadiv">
+                                        <label class="friendbox datadiv datalabel">@friend.GetFullName()</label>
+                                        <br />
+                                        <label class="small">(@friend.UserName)</label>
+                                    </div>
                                 </div>
                                 <div class="mrgn center-align">
                                     <form asp-controller="AccountManager" asp-action="Chat" asp-route-id="@friend.Id" method="post">
@@ -65,6 +67,7 @@
                                         </button>
                                     </form>
                                 </div>
+
                                 <div class="mrgn center-align">
                                     <form asp-controller="AccountManager" asp-action="DeleteFriend" asp-route-id="@friend.Id" method="post">
                                         <button type="submit" class="btn btn-sm btn-primary min-width-but">

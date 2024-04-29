@@ -4,10 +4,13 @@
     ViewData["Title"] = "Login";
 }
 
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
+
 <div class="block-reg background-white">
     <h4 class="center">Добро пожаловать!</h4>
     <form class="frm" method="post" asp-controller="AccountManager" asp-action="Login">
-        <div class="validation" asp-validation-summary="ModelOnly"></div>
+        <div class="validation" asp-validation-summary="All"></div>
         <div>
             <div class="mrgn">
                 <input asp-for="Email" class="form-control" />

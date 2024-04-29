@@ -113,24 +113,33 @@
 }
 
 .friendbox {
-    white-space: nowrap
+    white-space: nowrap;
 }
 
     .friendbox .datadiv {
-        display: inline-block;
+        display: inline-table;
         max-width: 150px;
     }
+        .friendbox .datadiv .datalabel {
+            max-width: 150px;
+            white-space: normal;
+            word-wrap: normal;
+        }
 
-    .friendbox .picdiv {
-        display: inline-block;
-        width: 30%;
-        vertical-align:top;
-    }
+        .friendbox .picdiv {
+            display: inline-block;
+            width: 30%;
+            vertical-align: top;
+        }
     
     .friendbox .chatdiv {
         display: inline-block;
         width: 40%;
     }
+
+.align-div {
+    height: 261px;
+}
 
 textarea {
     height: 32px;

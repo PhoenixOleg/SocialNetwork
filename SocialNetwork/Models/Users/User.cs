@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace SocialNetwork.Models.Users
 {
@@ -17,6 +19,10 @@ namespace SocialNetwork.Models.Users
         public string Status { get; set; }
 
         public string About { get; set; }
+
+        [ProtectedPersonalData]
+        [Required]
+        public override string Email { get; set; }
 
         public string GetFullName()
         {

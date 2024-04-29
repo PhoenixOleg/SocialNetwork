@@ -9,7 +9,8 @@ namespace SocialNetwork.Models.Context
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
+            Database.Migrate();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -21,9 +22,13 @@ namespace SocialNetwork.Models.Context
             .HasIndex(u => u.Email)
             .IsUnique();
 
+            //builder
+                //.ApplyConfiguration<Friend>(new FriendConfiguration())
+                //.ApplyConfiguration<Message>(new MessageConfiguration());
+
             builder
-                .ApplyConfiguration<Friend>(new FriendConfiguration())
-                .ApplyConfiguration<Message>(new MessageConfiguration());
+                .ApplyConfiguration(new FriendConfiguration())
+                .ApplyConfiguration(new MessageConfiguration());
         }
     }
 }

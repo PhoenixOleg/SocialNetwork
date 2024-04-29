@@ -61,11 +61,11 @@ namespace SocialNetwork.Controllers.Account
                     {
                         return RedirectToAction("MyPage", "AccountManager");
                     }
-                    else
-                    {
-                        ModelState.AddModelError("", "Неправильный логин и (или) пароль");
-                    }
                 }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Неправильный логин и (или) пароль");
+                }                
             }
 
             return RedirectToAction("Index", "Home");
