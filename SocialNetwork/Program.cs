@@ -74,7 +74,6 @@ namespace SocialNetwork
             else
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseMigrationsEndPoint(); //Вместо UseDatabaseErrorPage();
             }
 
             app.UseHttpsRedirection();
@@ -93,19 +92,9 @@ namespace SocialNetwork
             app.UseAuthorization(); //Добавление авторизации
 
 
-            //app.MapControllerRoute(
-            //    name: "default",
-            //    pattern: "{controller=Home}/{action=Index}/{id?}"); //Обычный маршрут по умолчанию -> контроллер Home, действие Index
-
-
-            app.UseEndpoints(endpoints =>
-            {
-                // определение маршрутов
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
-            });
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}"); //Обычный маршрут по умолчанию -> контроллер Home, действие Index
 
             app.Run();
         }

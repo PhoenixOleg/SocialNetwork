@@ -359,7 +359,7 @@ namespace SocialNetwork.Controllers.Account
             {
                 You = result,
                 ToWhom = friend,
-                MessagesHistory = await mess.AsQueryable().OrderBy(x => x.Id).ToListAsync(),
+                MessagesHistory = mess.OrderBy(x => x.Id).ToList(),
             };
 
             return model;
